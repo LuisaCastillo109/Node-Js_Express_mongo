@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1"
+    "@hapi/joi": "^17.1.1",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.1"
   }
 }
