@@ -1,8 +1,9 @@
+const { required } = require('@hapi/joi');
 const mongoose = require ('mongoose');
 
-const usuarioSchema =new mogooose.Schema({ 
+const usuarioSchema =new mongoose.Schema({ 
 
-email:{ 
+correo:{ 
     type:String,
     required:true
 },
