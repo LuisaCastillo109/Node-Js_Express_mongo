@@ -54,14 +54,7 @@ async function crearUsuario(body){
     });
     return await usuario.save();
 }
-async function desactivarUsuario(correo){
-    let usuario = await usuario.findOneAndUpdate({"correo":correo},{
-        $set:{
-            estado:false
-        }
-}, {new:true} );
-return usuario;
-}
+
 
 ruta.put('/:correo', (req, res)=> {
     const {error,value}=schema.validate(req.params.nombre, req.body);
@@ -90,4 +83,27 @@ async function actualizarUsuario(correo,body){
     }    
     }, {new: true});
     return usuario;
+}
+
+ruta.delete('/:correo', (req,res) => {
+ let resultado = desactivarUsuario(req.params.correo);
+resultado.then(valor => {
+    res.json({
+        usuario:valor
+    })
+}).catch(err => {
+    res.status (400).json({
+    err
+    })
+});
+});
+
+
+async function desactivarUsuario(correo){
+    let usuario = await Usuario.findOneAndUpdate({"correo":correo},{
+        $set:{
+            estado:false
+        }
+}, {new:true} );
+return usuario;
 }
