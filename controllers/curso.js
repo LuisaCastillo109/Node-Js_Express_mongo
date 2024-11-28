@@ -1,5 +1,5 @@
 const express=require("express");
-const curso =require("../models/curso_model");
+const Curso =require("../models/curso_model");
 const ruta =express.Router();
 
 
@@ -24,7 +24,7 @@ res.json('Respuesta a peticion GET de cursos funcionando correctamente');
  async function crearCurso(body){
     let curso = new Curso({
         titulo  :body.titulo,
-        descipcion :body.descipcion,
+        descripcion :body.descripcion,
         alumnos :body.alumnos,
         calificacion: body.calificacion
     });

@@ -4,11 +4,11 @@ const cursoSchema =new mongoose.Schema({
 
 titulo:{ 
     type:String,
-    required:true
+    default:true
 },
 descripcion:{
     type:String,
-    required:true
+    required:false
  },
 
 estado:{ 
@@ -28,4 +28,4 @@ calificacion:{
     default:0
 
  }})
- module.exports=mongoose.model('Curso', cursoSchema);
+ module.exports=mongoose.model('curso', cursoSchema);
