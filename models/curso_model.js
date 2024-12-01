@@ -11,10 +11,11 @@ descripcion:{
     required:false
  },
 
-estado:{ 
+ estado:{ 
     type:Boolean,
     default:true
-},
+ },
+ 
 imagen:{ 
     type:String,
     required:false
@@ -28,4 +29,4 @@ calificacion:{
     default:0
 
  }})
- module.exports=mongoose.model('curso', cursoSchema);
+ module.exports=mongoose.model('Curso', cursoSchema);
