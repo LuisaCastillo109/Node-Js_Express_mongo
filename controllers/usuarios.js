@@ -2,6 +2,7 @@ const express = require("express");
 const Usuario = require("../models/usuario_model");
 const Joi = require("@hapi/joi");
 const ruta = express.Router();
+const logic = require ('../logic/usuario_logic')
 
 
 
@@ -22,7 +23,7 @@ const schema = Joi.object({
 });
 
 ruta.get('/', (req, res) => {
-    let resultado = listarUsuarios();
+    let resultado =logic.listarUsuarioActivos();
     resultado.then(usuarios => {
         res.json(usuarios)
     }).catch(err => {
@@ -35,7 +36,7 @@ ruta.get('/', (req, res) => {
 ruta.post('/', (req, res) => {
     let body = req.body;
 
-    const { error, value } = schema.validate({ nombre: body.nombre, correo: body.correo });
+    const { error, value } = logic.schema.validate({ nombre: body.nombre, correo: body.correo });
     if (!error) {
         let resultado = crearUsuario(body);
 
@@ -65,9 +66,9 @@ async function crearUsuario(body) {
 }
 
 ruta.put('/:correo', (req, res) => {
-    const { error, value } = schema.validate(req.params.nombre, req.body);
+    const { error, value } = logic.schema.validate(req.params.nombre, req.body);
     if (!error) {
-        let resultado = actualizarUsuario(req.params.correo, req.body);
+        let resultado = logic.actualizarUsuario(req.params.correo, req.body);
         resultado.then(valor => {
             res.json({
                 valor
@@ -84,18 +85,8 @@ ruta.put('/:correo', (req, res) => {
     }
 });
 
-async function actualizarUsuario(correo, body) {
-    let usuario = await Usuario.findOneAndUpdate({ "correo": correo }, {
-        $set: {
-            nombre: body.nombre,
-            contraseña: body.contraseña
-        }
-    }, { new: true });
-    return usuario;
-}
-
 ruta.delete('/:correo', (req, res) => {
-    let resultado = desactivarUsuario(req.params.correo);
+    let resultado = logic.desactivarUsuario(req.params.correo);
     resultado.then(valor => {
         res.json({
             usuario: valor
@@ -106,6 +97,18 @@ ruta.delete('/:correo', (req, res) => {
         })
     });
 });
+
+async function actualizarUsuario(correo, body) {
+    let usuario = await Usuario.findOneAndUpdate({ "correo": correo }, {
+        $set: {
+            nombre: body.nombre,
+            contraseña: body.contraseña
+        }
+    }, { new: true });
+    return usuario;
+}
+
+
 
 async function desactivarUsuario(correo) {
     let usuario = await Usuario.findOneAndUpdate({ "correo": correo }, {
