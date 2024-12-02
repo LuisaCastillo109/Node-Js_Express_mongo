@@ -6,7 +6,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 
-mongoose.connect('mongodb://localhost:27017/userscoursesdb', {
+mongoose.connect('mongodb+srv://Luisa:<db_password>@cluster0.rbajj.mongodb.net/userscoursesdb?restryWrites=true&w=majority', {
   useNewUrlParser: true, 
   useUnifiedTopology: true
 })
